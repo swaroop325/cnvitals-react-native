@@ -1,6 +1,7 @@
 {
   "name": "react-native-cnvitals-react-native",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "author": "swaroop_a.s <swaroopanand325@gmail.com> (https://github.com/swaroop325)",
   "description": "heartbeat, spo2",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -37,7 +38,6 @@
     "android"
   ],
   "repository": "https://github.com/swaroop325/react-native-cnvitals-react-native",
-  "author": "swaroop_a.s <swaroopanand325@gmail.com> (https://github.com/swaroop325)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/swaroop325/react-native-cnvitals-react-native/issues"
@@ -77,12 +77,6 @@
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn lint && yarn typescript"
-    }
   },
   "commitlint": {
     "extends": [

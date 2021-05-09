@@ -4,10 +4,15 @@ import { StyleSheet, View, Text } from 'react-native';
 import CnvitalsReactNative from 'react-native-cnvitals-react-native';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<string | undefined>();
 
   React.useEffect(() => {
-    CnvitalsReactNative.multiply(3, 7).then(setResult);
+    let data = JSON.stringify({
+      api_key: '',
+      scan_token: '',
+      user_id: '',
+    });
+    CnvitalsReactNative.getVitals(data).then(setResult);
   }, []);
 
   return (

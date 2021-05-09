@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
 
 type CnvitalsReactNativeType = {
-  multiply(a: number, b: number): Promise<number>;
+  getVitals(a: any): Promise<any>;
 };
 
 const { CnvitalsReactNative } = NativeModules;
