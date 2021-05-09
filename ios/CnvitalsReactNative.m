@@ -19,14 +19,22 @@ RCT_EXPORT_MODULE()
 // Example method
 // See // https://reactnative.dev/docs/native-modules-ios
 RCT_REMAP_METHOD(getVitals,
-                 multiplyWithA:(nonnull NSString*)a
+                 multiplyWithA:(nonnull NSString*)data
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 {
+    NSError *error;
+    NSData *dataValues = [data dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:dataValues options:NSJSONWritingPrettyPrinted error:nil];
+    NSString *api_key = jsonData[@"api_key"];
+    NSString *scan_token = jsonData[@"scan_token"];
+    NSString *user_id = jsonData[@"user_id"];
+    NSDictionary *postDict = @{@"api_key":api_key, @"scan_token":scan_token,@"user_id":user_id };
     __callbackResult = resolve;
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"bodyvitals" bundle:nil];
         BodyVitalsViewController *vc = [sb instantiateViewControllerWithIdentifier:@"BodyVitalsViewController"];
+        vc.api_details = postDict;
         if (@available(iOS 13.0, *)) {
             [vc setModalInPresentation:YES];
         } else {
@@ -92,5 +100,11 @@ RCT_REMAP_METHOD(getVitals,
     [[UIApplication sharedApplication].delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     __callbackResult([@"iOS " stringByAppendingString:jsonString]);
     
+}
+
+- (void)heartRateMeasurementFailed:(NSString *)message{
+    self.detecting = false;
+    __callbackResult([@"iOS " stringByAppendingString:message]);
+    [self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 @end
