@@ -1,15 +1,15 @@
-# Carenow-CarePlixVitals REACT-NATIVE SDK
+# Carenow-CarePlixVitals React-Native SDK
 
 Although this Cordova plugin is public, you'll need a license for the [CNVitals SDK](http://www.carenowvitals.com/) in order to use it.
 If you have a license you'll need to clone this repository and replace the library/framework files with the ones you received from CarePlix Team.
 
 ## Installation
 
-To install the plugin to your React Native project use the Cordova CLI Tool:
+To install the plugin to your React Native project use the CLI Tool:
 
 ```
 #!bash
-$ cordova plugin add cordova-plugin-cnvitals  
+$ npm i react-native-cnvitals-react-native
 ```
 
 #### Full example
