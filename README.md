@@ -20,7 +20,12 @@ onDeviceReady: function() {
     let data = JSON.stringify({
       api_key: '',
       scan_token: '',
-      user_id: '',
+      employee_id: '',
+      language: '',
+      color_code: '',
+      measured_height: '',
+      measured_weight: '',
+      posture: ''
     });
     CnvitalsReactNative.getVitals(data).then(setResult);
 
@@ -36,14 +41,15 @@ onDeviceReady: function() {
   {
       api_key : "sample_key",
       scan_token : "sample_token",
-      user_id : "sample_user_id"
+      employee_id: 'sample_token',
+      language: 'en',
+      color_code: '#c82633',
+      measured_height: '180',
+      measured_weight: '60',
+      posture: 'posture'  
   } 
 });
 ````
-#### For any Queries
-
-You can also refer to the example application which is inside the package for any dounbts regarding the setup or dependencies
-
 #### For any Queries
 
 Please visit the [Carenow](https://www.carenow.healthcare).

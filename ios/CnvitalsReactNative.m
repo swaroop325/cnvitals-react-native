@@ -6,9 +6,11 @@
 @property (nonatomic, assign) int bpms;
 @property (nonatomic, assign) int so2;
 @property (nonatomic, assign) int rr;
-@property (nonatomic, getter=isModalInPresentation) BOOL modalInPresentation;
+@property (nonatomic, getter = isModalInPresentation) BOOL modalInPresentation;
 @property (nonatomic, strong) NSString *ppgdata;
 @property (nonatomic, strong) NSString *ecgdata;
+@property (nonatomic, strong) NSString *heartdataArray;
+@property (nonatomic, strong) NSString *apiResponse;
 @property(strong, nonatomic) UIViewController *viewController;
 @property(strong, nonatomic) RCTPromiseResolveBlock _callbackResult;
 @end
@@ -28,8 +30,12 @@ RCT_REMAP_METHOD(getVitals,
     NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:dataValues options:NSJSONWritingPrettyPrinted error:nil];
     NSString *api_key = jsonData[@"api_key"];
     NSString *scan_token = jsonData[@"scan_token"];
-    NSString *user_id = jsonData[@"user_id"];
-    NSDictionary *postDict = @{@"api_key":api_key, @"scan_token":scan_token,@"user_id":user_id };
+    NSString *color_code = jsonData[@"color_code"];
+    NSString *employee_id = jsonData[@"employee_id"];
+    NSString *measured_height= jsonData[@"measured_height"];
+    NSString *measured_weight= jsonData[@"measured_weight"];
+    NSString *posture =jsonData[@"posture"];
+    NSDictionary *postDict = @{@"api_key":api_key, @"scan_token":scan_token,@"employee_id":employee_id,@"measured_height": measured_height, @"measured_weight":measured_weight,@"posture": posture };
     __callbackResult = resolve;
     dispatch_async(dispatch_get_main_queue(), ^{
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"bodyvitals" bundle:nil];
@@ -56,6 +62,9 @@ RCT_REMAP_METHOD(getVitals,
 - (void)heartRateUpdate:(int)bpm{
     self.bpms = bpm;
 }
+- (void)apiResponseUpdate:(NSString *)apiResponse{
+    self.apiResponse = apiResponse;
+}
 
 - (void)Spo2Update:(int)so2{
     self.so2 = so2;
@@ -73,6 +82,10 @@ RCT_REMAP_METHOD(getVitals,
     self.ecgdata = ecgData;
 }
 
+- (void)setHeartDataArray:(NSString *)heartDataArray{
+    self.heartdataArray = heartDataArray;
+}
+
 - (void)heartRateEnd{
     self.detecting = false;
     
@@ -86,7 +99,8 @@ RCT_REMAP_METHOD(getVitals,
     [dict setValue:myRespirationRate forKey:@"breath"];
     [dict setValue:self.ppgdata forKey:@"ppgdata"];
     [dict setValue:self.ecgdata forKey:@"ecgdata"];
-    
+    [dict setValue:self.heartdataArray forKey:@"heartDataArray"];
+    [dict setValue:self.apiResponse forKey:@"apiResponse"];
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict
                                                        options:NSJSONWritingPrettyPrinted error:&error];
@@ -98,13 +112,13 @@ RCT_REMAP_METHOD(getVitals,
         jsonString = @"";
     }
     [[UIApplication sharedApplication].delegate.window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-    __callbackResult([@"iOS " stringByAppendingString:jsonString]);
+    __callbackResult([@"" stringByAppendingString:jsonString]);
     
 }
 
 - (void)heartRateMeasurementFailed:(NSString *)message{
     self.detecting = false;
-    __callbackResult([@"iOS " stringByAppendingString:message]);
+    __callbackResult([@"" stringByAppendingString:message]);
     [self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 @end
