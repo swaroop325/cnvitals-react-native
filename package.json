@@ -1,6 +1,6 @@
 {
   "name": "react-native-cnvitals-react-native",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "swaroop_a.s <swaroopanand325@gmail.com> (https://github.com/swaroop325)",
   "description": "heartbeat, spo2",
   "main": "lib/commonjs/index",
